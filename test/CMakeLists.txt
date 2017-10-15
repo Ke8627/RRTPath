@@ -4,6 +4,10 @@ add_executable(
     cpp-test
     main.cpp
     test.cpp
+    ../app/rrt_path.cpp
+    ../app/obstacle.cpp
+    ../app/vertex.cpp
+    ../app/map.cpp
 )
 
 target_include_directories(cpp-test PUBLIC ../vendor/googletest/googletest/include 
