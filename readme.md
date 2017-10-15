@@ -1,28 +1,36 @@
 # C++ Boilerplate
-[![Build Status](https://travis-ci.org/dpiet/cpp-boilerplate.svg?branch=master)](https://travis-ci.org/dpiet/cpp-boilerplate)
-[![Coverage Status](https://coveralls.io/repos/github/dpiet/cpp-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/dpiet/cpp-boilerplate?branch=master)
+[![Build Status](https://travis-ci.org/jeshoward/RRTPath.svg?branch=master)](https://travis-ci.org/jeshoward/RRTPath)
+[![Coverage Status](https://coveralls.io/repos/github/jeshoward/RRTPath/badge.svg?branch=master)](https://coveralls.io/github/jeshoward/RRTPath?branch=master)
 ---
+## Rapidly Exploring Random Tree Pathing Algorithm ##
 
-## Overview
+A simple rapidly exploring random tree path algorithm implementation. Includes four classes:
+-RRTPath
+-Vertex
+-Map
+-Obstacle
 
-Simple starter C++ project with:
+The RRTPath class relies upon the map, vertex, and obstacle classes to function. It accepts a map, with or without obstacles, a starting location on the map, a goal location on the map, a distance that the RRT expands at each step, a distance that the RRT uses to check for collisions, and a radius for the goal. It returns the first path it finds (not always the most efficient) between the starting location and the goal as a list of x,y coordinate pairs.
 
-- cmake
-- googletest
+Vertices are simple structures used by RRTPath to keep track of the RRT expansions and to rebuild the path from the start to the goal. They consist of an x,y coordinate location and a link to the vertex that preceded it.
+
+The map class is a simple grid. The default size of the map is 10x10, but can be customized to any rectangular height and width. Maps can have obstacles or not. 
+
+Obstacles are simple squares defined by a location on the map and their size. 
+
+Vertices are simple structs used by RRTPath to keep track of the RRT expansions and to rebuild the path from the start to the goal. They consist of an x,y coordinate location and a link to the vertex that preceded it.
 
 ## Standard install via command-line
 ```
-git clone --recursive https://github.com/dpiet/cpp-boilerplate
+git clone --recursive https://github.com/jeshoward/RRTPath
 cd <path to repository>
 mkdir build
 cd build
 cmake ..
 make
-Run tests: ./test/cpp-test
-Run program: ./app/shell-app
 ```
 
-## Building for code coverage (for assignments beginning in Week 4)
+## Building for code coverage
 ```
 sudo apt-get install lcov
 cmake -D COVERAGE=ON -D CMAKE_BUILD_TYPE=Debug ../
@@ -39,7 +47,7 @@ In your Eclipse workspace directory (or create a new one), checkout the repo (an
 ```
 mkdir -p ~/workspace
 cd ~/workspace
-git clone --recursive https://github.com/dpiet/cpp-boilerplate
+git clone --recursive https://github.com/jeshoward/RRTPath
 ```
 
 In your work directory, use cmake to create an Eclipse project for an [out-of-source build] of cpp-boilerplate
@@ -50,6 +58,21 @@ mkdir -p boilerplate-eclipse
 cd boilerplate-eclipse
 cmake -G "Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug -D CMAKE_ECLIPSE_VERSION=4.7.0 -D CMAKE_CXX_COMPILER_ARG1=-std=c++14 ../cpp-boilerplate/
 ```
+
+## Dependencies
+RRTPath includes the ability to generate a 2D visualization of the RRT and the final path taken by use of the matplotlib-cpp library, which can be found at:
+
+https://github.com/lava/matplotlib-cpp
+
+Installation terminal command is:
+
+sudo apt-get install python-matplotlib python-numpy python2.7-dev
+
+Matplotlib is a C++ wrapper for the python library matplotlib. In order to use the library you will need to have a working python installation. The matplotlib library is available under the MIT license.
+
+The matplotlib.h file can be placed anywhere to be included in your project.
+
+To add Python.h to your Eclipse environment go to Project -> Properties -> C/C++ Include Paths and Symbols and add an external include path to your python directory (/usr/include/python2.7 if you followed the instructions from the matplotlibcpp's readme). 
 
 ## Import
 
@@ -63,7 +86,7 @@ Source files may be edited under the "[Source Directory]" label in the Project E
 
 ## Build
 
-To build the project, in Eclipse, unfold boilerplate-eclipse project in Project Explorer,
+To build the project, in Eclipse, unfold RRTPath project in Project Explorer,
 unfold Build Targets, double click on "all" to build all projects.
 
 ## Run
@@ -74,40 +97,8 @@ select Run As -> Local C/C++ Application
 2. Choose the binaries to run (e.g. shell-app, cpp-test for unit testing)
 
 
-## Debug
-
-
-1. Set breakpoint in source file (i.e. double click in the left margin on the line you want 
-the program to break).
-
-2. In Eclipse, right click on the boilerplate-eclipse in Project Explorer, select Debug As -> 
-Local C/C++ Application, choose the binaries to run (e.g. shell-app).
-
-3. If prompt to "Confirm Perspective Switch", select yes.
-
-4. Program will break at the breakpoint you set.
-
-5. Press Step Into (F5), Step Over (F6), Step Return (F7) to step/debug your program.
-
-6. Right click on the variable in editor to add watch expression to watch the variable in 
-debugger window.
-
-7. Press Terminate icon to terminate debugging and press C/C++ icon to switch back to C/C++ 
-perspetive view (or Windows->Perspective->Open Perspective->C/C++).
-
-
-## Plugins
-
-- CppChEclipse
-
-    To install and run cppcheck in Eclipse
-
-    1. In Eclipse, go to Window -> Preferences -> C/C++ -> cppcheclipse.
-    Set cppcheck binary path to "/usr/bin/cppcheck".
-
-    2. To run CPPCheck on a project, right click on the project name in the Project Explorer 
-    and choose cppcheck -> Run cppcheck.
-
+## Contributing
+This implementation was an exercise in software engineering practices for the University of Maryland course ENPM808X - Software Development for Robotics. No contributions are particularly desired, though feel free to spiffy up the code for your own use.
 
 - Google C++ Sytle
 
@@ -121,6 +112,6 @@ perspetive view (or Windows->Perspective->Open Perspective->C/C++).
 
 [reference-id-for-eclipse-cpp-google-style]: https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-cpp-google-style.xml
 
-- Git
+## Licensing
+The code in this project is licensed under GNU public license
 
-    It is possible to manage version control through Eclipse and the git plugin, but it typically requires creating another project. If you're interested in this, try it out yourself and contact me on Canvas.
