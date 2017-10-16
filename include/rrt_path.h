@@ -47,14 +47,6 @@ class RRTPath {
   int epsilon;
 
   /**
-   * @brief a subsampling distance to be used to determine path safety
-   * @detail A distance less than epsilon that will be used to sample the
-   * proposed path between a vertex and a new point to be sure that no
-   * collisions occur.
-   */
-  int delta;
-
-  /**
    * @brief the Map object we are navigating
    */
   Map map;
@@ -90,7 +82,7 @@ class RRTPath {
    * @param randomPoint the point you want to find the nearest vertex to
    * @return the nearest Vertex to the given point
    */
-  Vertex getClosestPoint(std::pair<int,int>);
+  Vertex* getClosestPoint(std::pair<int,int>);
 
   /**
    * @brief Expands the RRT between the Vertex and the given point
@@ -107,15 +99,16 @@ class RRTPath {
    * @return true if the expansion was made, false if a collision would have
    * occurred
    */
-  bool moveTowardsPoint(Vertex, std::pair<int,int>);
+  bool moveTowardsPoint(Vertex*, std::pair<int,int>);
 
   /**
    * @brief determines if we have reached the goal
    * @detail Determines if a newly discovered Vertex is within
    * RRTPath::goalRadius of the goal.
+   * @param the location of the newly created vertex
    * @return true if within goalRadius of goal, false otherwise
    */
-  bool reachedGoal(Vertex);
+  bool reachedGoal(std::pair<int,int>);
 
   /**
    * @brief the path between the start and goal
@@ -127,9 +120,26 @@ class RRTPath {
    * vertex, which will be designated by having a 0 instead of a Vertex in
    * the prevVertex.
    */
-  std::list<std::pair<int,int>> calculatePath(Vertex);
+  std::list<std::pair<int,int>> calculatePath(Vertex*);
 
+  /**
+   * @brief returns the distance between two points
+   * @param startPoint a pair<int,int> that that indicates the first point
+   * @param endPoint a pair<int,int> that indicates the second point
+   * @return returns a float of the distance between the two given points
+   */
+  float getDistance(std::pair<int,int>, std::pair<int,int>);
 
+  /**
+   * @brief determines if a path between two points is safe
+   * @details Determines if the path between the location of the currentVertex
+   * and the point specified by newPoint is safe. Safe is defined as not
+   * passing through any obstacles or beyond the borders of the map.
+   * @param currentVertex the location to begin the path
+   * @param newPoint the location to end the path
+   * @return true if path does not collide, false if a collision would occur
+   */
+  bool isSafe(std::pair<int, int>, std::pair<int,int>);
 
  public:
   /**
@@ -143,7 +153,7 @@ class RRTPath {
    * @param delta a subsampling distance to determine if a collision occurs
    * @param goalRadius how close to the goal is close enough
    */
-  RRTPath(Map, int, int, int, int, int, int, int);
+  RRTPath(Map, int, int, int, int, int, int);
 
   /**
    * @brief runs the rrt algorithm and finds the path
@@ -152,7 +162,7 @@ class RRTPath {
    * their closest vertex and draw new, safe paths.
    * @return returns the path as a std::list<std::pair<x, y>>
    */
-  std::list<std::pair<int,int>> run();
+  std::list<std::pair<int,int>> findPath();
 
 
   /**
