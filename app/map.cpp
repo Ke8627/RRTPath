@@ -13,7 +13,7 @@
  * It has a dependent class, Obstacle.
  */
 
-#include "../include/map.h"
+#include "map.h"
 
 Map::Map() {
   Map::size.first = 10;
@@ -42,8 +42,4 @@ std::pair<int, int> Map::getSize() {
 
 std::list<Obstacle> Map::getObstacleList() {
   return obstacleList;
-}
-
-bool Map::isSafe(Vertex currentVertex, std::pair<int, int> newPoint) {
-  return false;
 }
