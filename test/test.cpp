@@ -223,7 +223,7 @@ TEST(path, algorithm_test) {
   RRTPath rrt(specificMap, 0, 0, 12, 12, 5, 5);
 
   //testing moving towards the point, closest vertex should be the root
-  //shouldn't be any obstacles in the way of moving from 0,0 to 5,5
+  //shouldn't be any obstacles in the way of moving from 0,0 to 3,3
   Vertex* closest = rrt.getClosestPoint(std::pair<int, int>(10, 10));
   EXPECT_EQ(closest->x, rrt.root->x);
   EXPECT_EQ(closest->y, rrt.root->y);
@@ -231,22 +231,34 @@ TEST(path, algorithm_test) {
   EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int, int>(10, 10)));
   EXPECT_EQ(rrt.vertexList.size(), 2);
 
-  //Check to make sure that the closest node is now at 5,5 rather than root
-  //should be able to move from 5,5 to 10,10
+  //Check to make sure that the closest node is now at 3,3 rather than root
+  //should be able to move from 3,3 to 6,6
   closest = rrt.getClosestPoint(std::pair<int, int>(10, 10));
-  EXPECT_EQ(closest->x, 5);
-  EXPECT_EQ(closest->y, 5);
+  EXPECT_EQ(closest->x, 3);
+  EXPECT_EQ(closest->y, 3);
   EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int, int>(10, 10)));
   EXPECT_EQ(rrt.vertexList.size(), 3);
 
-  //Check to make sure closest node is now at 10,10
+  //Check to make sure closest node is now at 6,6
+  //should be able to get from 6,6 to 9,9
+  closest = rrt.getClosestPoint(std::pair<int, int>(15, 15));
+  EXPECT_EQ(closest->x, 6);
+  EXPECT_EQ(closest->y, 6);
+  EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int,int>(15, 15)));
+  EXPECT_EQ(rrt.vertexList.size(), 4);
+
+  //Check to make sure closest node is now at 9,9
+  //should be able to get from 9,9 to 12,12
+  closest = rrt.getClosestPoint(std::pair<int, int>(15, 15));
+  EXPECT_EQ(closest->x, 9);
+  EXPECT_EQ(closest->y, 9);
+  EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int,int>(15, 15)));
+  EXPECT_EQ(rrt.vertexList.size(), 5);
+
   //should not be able to move to 15,15 because of an obstacle
   //but should be within range of the goal
-  closest = rrt.getClosestPoint(std::pair<int, int>(15, 15));
-  EXPECT_EQ(closest->x, 10);
-  EXPECT_EQ(closest->y, 10);
   EXPECT_FALSE(rrt.moveTowardsPoint(closest, std::pair<int, int>(15, 15)));
-  EXPECT_EQ(rrt.vertexList.size(), 3);
+  EXPECT_EQ(rrt.vertexList.size(), 5);
   EXPECT_TRUE(rrt.reachedGoal(closest->getLocation()));
 }
 
