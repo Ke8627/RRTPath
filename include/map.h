@@ -82,17 +82,6 @@ class Map {
    * @return list of obstacles
    */
   std::list<Obstacle> getObstacleList();
-
-  /**
-   * @brief determines if a path between two points is safe
-   * @details Determines if the path between the location of the currentVertex
-   * and the point specified by newPoint is safe. Safe is defined as not
-   * passing through any obstacles or beyond the borders of the map.
-   * @param currentVertex the location to begin the path
-   * @param newPoint the location to end the path
-   * @return true if path does not collide, false if a collision would occur
-   */
-  bool isSafe(Vertex, std::pair<int,int>);
 };
 
 #endif /* APP_MAP_H_ */
