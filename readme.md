@@ -20,6 +20,8 @@ Obstacles are defined by a location on the map and their radius.
 
 Vertices are simple structs used by RRTPath to keep track of the RRT expansions and to rebuild the path from the start to the goal. They consist of an x,y coordinate location and a link to the vertex that preceded it.
 
+Spreadsheets with backlog, iteration log, and work log available at:
+https://docs.google.com/spreadsheets/d/1GPpUz2nD-m0Ix3eE1D8XtdHuq6s90qdbppGDrRtQlEs/edit?usp=sharing
 
 ## Standard install via command-line
 ```
