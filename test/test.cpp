@@ -80,7 +80,7 @@ TEST(map, constructor) {
   Map genericMap;
   EXPECT_EQ(genericMap.getSize().first, 10);
   EXPECT_EQ(genericMap.getSize().second, 10);
-  EXPECT_EQ(genericMap.getObstacleList().size(), 0);
+  EXPECT_TRUE(genericMap.getObstacleList().size()==0);
 
   //Create an obstacle and add it to a list
   Obstacle obs(5, 10, 3);
@@ -93,7 +93,7 @@ TEST(map, constructor) {
   Map specificMap(15, 20, obsList);
   EXPECT_EQ(specificMap.getSize().first, 15);
   EXPECT_EQ(specificMap.getSize().second, 20);
-  EXPECT_EQ(specificMap.getObstacleList().size(), 1);
+  EXPECT_TRUE(specificMap.getObstacleList().size()==1);
 }
 
 TEST(map, obstacle_tests) {
@@ -102,19 +102,19 @@ TEST(map, obstacle_tests) {
 
   //constructor
   Map specificMap(15, 20, obsList);
-  EXPECT_EQ(specificMap.getObstacleList().size(), 0);
+  EXPECT_TRUE(specificMap.getObstacleList().size()==0);
 
   //add obstacle
   specificMap.addObstacle(obs);
-  EXPECT_EQ(specificMap.getObstacleList().size(), 1);
+  EXPECT_TRUE(specificMap.getObstacleList().size()==1);
 
   //get obstacle list
   std::list<Obstacle> obsList2 = specificMap.getObstacleList();
-  EXPECT_EQ(obsList2.size(), 1);
+  EXPECT_TRUE(obsList2.size()==1);
 
   //remove obstacle
   specificMap.removeObstacle(obs);
-  EXPECT_EQ(specificMap.getObstacleList().size(), 0);
+  EXPECT_TRUE(specificMap.getObstacleList().size()==0);
 }
 
 
@@ -218,6 +218,7 @@ TEST(path, algorithm_test) {
   //Create an RRTPath
   Obstacle obs(15, 15, 3);
   std::list<Obstacle> obsList;
+  std::list<std::pair<int, int>> path;
   Map specificMap(15, 15, obsList);
   specificMap.addObstacle(obs);
   RRTPath rrt(specificMap, 0, 0, 12, 12, 5, 5);
@@ -227,9 +228,9 @@ TEST(path, algorithm_test) {
   Vertex* closest = rrt.getClosestPoint(std::pair<int, int>(10, 10));
   EXPECT_EQ(closest->x, rrt.root->x);
   EXPECT_EQ(closest->y, rrt.root->y);
-  EXPECT_EQ(rrt.vertexList.size(), 1);
+  EXPECT_TRUE(rrt.vertexList.size()==1);
   EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int, int>(10, 10)));
-  EXPECT_EQ(rrt.vertexList.size(), 2);
+  EXPECT_TRUE(rrt.vertexList.size()==2);
 
   //Check to make sure that the closest node is now at 3,3 rather than root
   //should be able to move from 3,3 to 6,6
@@ -237,7 +238,7 @@ TEST(path, algorithm_test) {
   EXPECT_EQ(closest->x, 3);
   EXPECT_EQ(closest->y, 3);
   EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int, int>(10, 10)));
-  EXPECT_EQ(rrt.vertexList.size(), 3);
+  EXPECT_TRUE(rrt.vertexList.size()==3);
 
   //Check to make sure closest node is now at 6,6
   //should be able to get from 6,6 to 9,9
@@ -245,7 +246,7 @@ TEST(path, algorithm_test) {
   EXPECT_EQ(closest->x, 6);
   EXPECT_EQ(closest->y, 6);
   EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int,int>(15, 15)));
-  EXPECT_EQ(rrt.vertexList.size(), 4);
+  EXPECT_TRUE(rrt.vertexList.size()==4);
 
   //Check to make sure closest node is now at 9,9
   //should be able to get from 9,9 to 12,12
@@ -253,12 +254,40 @@ TEST(path, algorithm_test) {
   EXPECT_EQ(closest->x, 9);
   EXPECT_EQ(closest->y, 9);
   EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int,int>(15, 15)));
-  EXPECT_EQ(rrt.vertexList.size(), 5);
+  EXPECT_TRUE(rrt.vertexList.size()==5);
 
   //should not be able to move to 15,15 because of an obstacle
   //but should be within range of the goal
-  EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int, int>(15, 15)));
-  EXPECT_EQ(rrt.vertexList.size(), 6);
+  closest = rrt.getClosestPoint(std::pair<int, int>(15, 15));
+  EXPECT_FALSE(rrt.moveTowardsPoint(closest, std::pair<int, int>(15, 15)));
+  EXPECT_TRUE(rrt.vertexList.size()==5);
   EXPECT_TRUE(rrt.reachedGoal(closest->getLocation()));
+
+  //rebuild the path
+  path = rrt.calculatePath(rrt.vertexList.front());
+  //path should be of size 5: 0,0; 3,3; 6,6; 9,9; 12,12
+  EXPECT_TRUE(path.size()==5);
+  std::list<std::pair<int, int>>::iterator it;
+  int loc = 0;
+  for (it=path.begin(); it != path.end(); ++it) {
+    EXPECT_EQ(it->first, loc);
+    EXPECT_EQ(it->second,loc);
+    loc += 3;
+  }
 }
 
+TEST(path, find_path) {
+  //Create an RRTPath
+  Obstacle obs(15, 15, 3);
+  std::list<Obstacle> obsList;
+  std::list<std::pair<int, int>> path;
+  Map specificMap(15, 15, obsList);
+  specificMap.addObstacle(obs);
+  RRTPath rrt(specificMap, 0, 0, 12, 12, 5, 5);
+
+  path = rrt.findPath();
+  //Can't test exact path coords because of the randomness
+  //We do know that the most direct path takes at least 4 moves
+  //therefore the size of our rebuilt list should be greater than 3
+  EXPECT_TRUE(path.size() > 3);
+}

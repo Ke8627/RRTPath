@@ -64,9 +64,7 @@ class Obstacle {
    * @brief overload of < operator
    */
   inline bool operator < (const Obstacle& o) const {
-    if (size < o.size)
-      return true;
-    return false;
+    return size < o.size;
   }
 
   /**
