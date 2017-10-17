@@ -19,8 +19,8 @@
 
 #include <list>
 #include <utility>
-#include "./include/obstacle.h"
-#include "./include/vertex.h"
+#include "obstacle.h"
+#include "vertex.h"
 
 class Map {
  private:
