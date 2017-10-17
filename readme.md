@@ -16,10 +16,9 @@ Vertices are simple structures used by RRTPath to keep track of the RRT expansio
 
 The map class is a simple grid. The default size of the map is 10x10, but can be customized to any rectangular height and width. Maps can have obstacles or not. 
 
-Obstacles are simple squares defined by a location on the map and their size. 
+Obstacles are defined by a location on the map and their radius. 
 
 Vertices are simple structs used by RRTPath to keep track of the RRT expansions and to rebuild the path from the start to the goal. They consist of an x,y coordinate location and a link to the vertex that preceded it.
-
 
 
 ## Standard install via command-line
@@ -31,22 +30,6 @@ cd build
 cmake ..
 make
 ```
-## Running the demo
-The demo can be found in main.cpp within the app source directory. To customize it you may set any of the variables in the customizable variables section at the top.
-  map_height: The height of your rectangular map
-  map_width: The width of your rectangular map
-  start_x: the x coordinate of where you want your path to begin
-  start_y: the y coordinate of where you want your path to begin
-  goal_x: the x coordinate of your goal location
-  goal_y: the y coordinate of your goal location
-  step: how far you travel at each algorithm iteration. Smaller steps
-       have more detail and may create a more efficient path, but take longer
-       to run.
-  radius: how near you need to be to the goal to "reach" it
-  
-Obstacles may be added to the map in the create obstacles here section. Simply create your obstacle(s) and then add them to the map as shown.
-  
-Your path is printed to the console at the conclusion of the demo.
 
 ## Building for code coverage
 ```
@@ -92,13 +75,28 @@ Source files may be edited under the "[Source Directory]" label in the Project E
 To build the project, in Eclipse, unfold RRTPath project in Project Explorer,
 unfold Build Targets, double click on "all" to build all projects.
 
-## Run
+## Running the demo
+The demo can be found in main.cpp within the app source directory. To customize it you may set any of the variables in the customizable variables section at the top.
+  map_height: The height of your rectangular map
+  map_width: The width of your rectangular map
+  start_x: the x coordinate of where you want your path to begin
+  start_y: the y coordinate of where you want your path to begin
+  goal_x: the x coordinate of your goal location
+  goal_y: the y coordinate of your goal location
+  step: how far you travel at each algorithm iteration. Smaller steps
+       have more detail and may create a more efficient path, but take longer
+       to run.
+  radius: how near you need to be to the goal to "reach" it
+  
+Obstacles may be added to the map in the create obstacles here section. Simply create your obstacle(s) and then add them to the map as shown.
+  
+Your path is printed to the console at the conclusion of the demo.
 
-1. In Eclipse, right click on the boilerplate-eclipse in Project Explorer,
-select Run As -> Local C/C++ Application
+In Eclipse, right click on the shell-app in Project Explorer in the app folder and select Run As -> Local C/C++ Application
 
-2. Choose the binaries to run (e.g. shell-app, cpp-test for unit testing)
+## Running the tests
 
+In Eclipse, right click on cpp-test in Project Explorer in the test folder and select Run As -> Local C/C++ Application
 
 ## Contributing
 This implementation was an exercise in software engineering practices for the University of Maryland course ENPM808X - Software Development for Robotics. No contributions are particularly desired, though feel free to spiffy up the code for your own use.
