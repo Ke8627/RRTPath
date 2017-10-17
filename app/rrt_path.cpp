@@ -180,9 +180,8 @@ bool RRTPath::IsSafe(std::pair<int, int> start_point,
 
   //Check to make sure endpoint isn't inside of an obstacle
   std::list<Obstacle> obstacles = RRTPath::map_.GetObstacleList();
-  std::list<Obstacle>::iterator it;
-  for (it = obstacles.begin(); it != obstacles.end(); it++) {
-    if (RRTPath::GetDistance(end_point, it->GetLocation()) < it->GetSize())
+  for (Obstacle o : obstacles) {
+    if (RRTPath::GetDistance(end_point, o.GetLocation()) < o.GetSize())
       return false;
   }
 
@@ -197,10 +196,11 @@ bool RRTPath::IsSafe(std::pair<int, int> start_point,
     current_x += step*cos(theta);
     current_y += step*sin(theta);
     //Check the next step for obstacles
-    for (it = obstacles.begin(); it != obstacles.end(); it++) {
+
+    for (Obstacle o : obstacles) {
       if (RRTPath::GetDistance(std::pair<int, int>(static_cast<int>(current_x),
                                                     static_cast<int>(current_y)),
-                                it->GetLocation()) < it->GetSize())
+                                o.GetLocation()) < o.GetSize())
         return false;
     }
   }
