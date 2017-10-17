@@ -38,7 +38,7 @@ RRTPath::RRTPath(Map map, int startXLocation, int startYLocation,
 }
 
 std::list<std::pair<int,int>> RRTPath::findPath() {
-  bool reachedGoal = true;
+  bool reachedGoal = false;
   while (!reachedGoal) {
     //First we get a random point within the map
     std::pair<int, int> randomPoint = RRTPath::getRandomPoint();
@@ -56,6 +56,9 @@ std::list<std::pair<int,int>> RRTPath::findPath() {
 
   //Rebuild our path and return
   RRTPath::overallPath = calculatePath(RRTPath::vertexList.front());
+  std::list<std::pair<int, int>>::iterator it;
+  //  for (it=RRTPath::overallPath.begin(); it != RRTPath::overallPath.end(); ++it)
+  //    std::cout << it->first << ", " << it->second << std::endl;
   return RRTPath::overallPath;
 }
 
@@ -137,8 +140,7 @@ bool RRTPath::reachedGoal(std::pair<int, int> newVertex) {
   float distance = RRTPath::getDistance(newVertex, RRTPath::goalLocation);
   if (distance <= RRTPath::goalRadius)
     return true;
-  else
-    return false;
+  return false;
 }
 
 std::list<std::pair<int, int> > RRTPath::calculatePath(Vertex* goal) {
