@@ -56,7 +56,6 @@ std::list<std::pair<int,int>> RRTPath::find_path() {
 
   //Rebuild our path and return
   RRTPath::overall_path = calculate_path(RRTPath::vertex_list.front());
-  std::list<std::pair<int, int>>::iterator it;
   return RRTPath::overall_path;
 }
 
@@ -92,7 +91,7 @@ Vertex* RRTPath::get_closest_point(std::pair<int, int> random_point) {
   //iterate through our vertex list to find the closest
   std::list<Vertex*>::iterator it;
   for (it = RRTPath::vertex_list.begin(); it != RRTPath::vertex_list.end();
-      it++) {
+      ++it) {
     //get the distance between our current vertex (it) and the random point
     current_distance = RRTPath::get_distance((*it)->get_location(),
                                              random_point);
