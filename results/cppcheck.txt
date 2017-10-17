@@ -1,0 +1,6 @@
+cppcheck -v --std=c++1 --enable=all -I include/ app/ 2> results/cppcheck.txt
+
+[app/map.cpp:26]: (performance) When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don't explicitly write them to the initialization list. You could avoid assigning 'obstacle_list_' a value by passing the value to the constructor in the initialization list.
+[app/rrt_path.cpp:24]: (performance) When an object of a class is created, the constructors of all member variables are called consecutively in the order the variables are declared, even if you don't explicitly write them to the initialization list. You could avoid assigning 'map_' a value by passing the value to the constructor in the initialization list.
+[app/map.cpp:35]: (style) The function 'RemoveObstacle' is never used.
+(information) Cppcheck cannot find all the include files. Cppcheck can check the code without the include files found. But the results will probably be more accurate if all the include files are found. Please check your project's include directories and add all of them as include directories for Cppcheck. To see what files Cppcheck cannot find use --check-config.
