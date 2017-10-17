@@ -18,132 +18,141 @@
 #include <cmath>    //needed for finding closest point
 #include <iostream>
 
-RRTPath::RRTPath(Map map, int startXLocation, int startYLocation,
-                 int goalXLocation, int goalYLocation, int epsilon,
-                 int goalRadius) {
+RRTPath::RRTPath(Map map, int start_x, int start_y,
+                 int goal_x, int goal_y, int epsilon,
+                 int radius) {
   RRTPath::map = map;
-  RRTPath::startLocation.first = startXLocation;
-  RRTPath::startLocation.second = startYLocation;
-  RRTPath::goalLocation.first = goalXLocation;
-  RRTPath::goalLocation.second = goalYLocation;
+  RRTPath::start_location.first = start_x;
+  RRTPath::start_location.second = start_y;
+  RRTPath::goal_location.first = goal_x;
+  RRTPath::goal_location.second = goal_y;
   RRTPath::epsilon = epsilon;
-  RRTPath::goalRadius = goalRadius;
+  RRTPath::goal_radius = radius;
 
-  Vertex *rootNode = new Vertex(startXLocation, startYLocation, nullptr);
+  Vertex *root_node = new Vertex(start_x, start_y, nullptr);
 
-  RRTPath::root = rootNode;
+  RRTPath::root_node = root_node;
 
-  RRTPath::vertexList.push_back(RRTPath::root);
+  RRTPath::vertex_list.push_back(RRTPath::root_node);
 
 }
 
-std::list<std::pair<int,int>> RRTPath::findPath() {
-  bool reachedGoal = false;
-  while (!reachedGoal) {
+std::list<std::pair<int,int>> RRTPath::find_path() {
+  bool goal_reached = false;
+  while (!goal_reached) {
     //First we get a random point within the map
-    std::pair<int, int> randomPoint = RRTPath::getRandomPoint();
+    std::pair<int, int> random_point = RRTPath::get_random_point();
 
     //Next we find the closest vertex to that random point
-    Vertex *closestVertex = RRTPath::getClosestPoint(randomPoint);
+    Vertex *closest_vertex = RRTPath::get_closest_point(random_point);
 
     //Then we try to make a move towards that point
-    if (RRTPath::moveTowardsPoint(closestVertex, randomPoint)) {
+    if (RRTPath::move_towards_point(closest_vertex, random_point)) {
       //Check if we've reached our goal
-      Vertex *newVertex = RRTPath::vertexList.front();
-      reachedGoal = RRTPath::reachedGoal(newVertex->getLocation());
+      Vertex *new_vertex = RRTPath::vertex_list.front();
+      goal_reached = RRTPath::reached_goal(new_vertex->get_location());
     }
   } //end while loop
 
   //Rebuild our path and return
-  RRTPath::overallPath = calculatePath(RRTPath::vertexList.front());
+  RRTPath::overall_path = calculate_path(RRTPath::vertex_list.front());
   std::list<std::pair<int, int>>::iterator it;
-  //  for (it=RRTPath::overallPath.begin(); it != RRTPath::overallPath.end(); ++it)
-  //    std::cout << it->first << ", " << it->second << std::endl;
-  return RRTPath::overallPath;
+  return RRTPath::overall_path;
 }
 
-std::pair<int, int> RRTPath::getRandomPoint() {
-  std::pair<int, int> randomPoint;
+std::pair<int, int> RRTPath::get_random_point() {
+  std::pair<int, int> random_point;
 
   //Get the size of the map so we know our bounds
-  std::pair<int, int> mapSize = RRTPath::map.getSize();
+  std::pair<int, int> map_size = RRTPath::map.get_size();
 
   //Get a random point within the bounds of our map
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> x_random(0,mapSize.first);
-  std::uniform_int_distribution<> y_random(0,mapSize.second);
+  std::uniform_int_distribution<> x_random(0,map_size.first);
+  std::uniform_int_distribution<> y_random(0,map_size.second);
 
   //Generate the random point
-  randomPoint.first = x_random(gen);
-  randomPoint.second = y_random(gen);
+  random_point.first = x_random(gen);
+  random_point.second = y_random(gen);
 
   //Return the random point
-  return randomPoint;
+  return random_point;
 }
 
-Vertex* RRTPath::getClosestPoint(std::pair<int, int> randomPoint) {
-  /**
-   * TODO
-   *    1. find closest vertex to random point and return it
-   */
-  Vertex* closest = RRTPath::root;
-  float closestDistance = INFINITY;
-  float currentDistance = INFINITY;
+Vertex* RRTPath::get_closest_point(std::pair<int, int> random_point) {
+  //Set our closest vertex to our root, since we know it exists
+  Vertex* closest = RRTPath::root_node;
 
+  //closest distance will keep track of the closest distance we find
+  float closest_distance = INFINITY;
+  //current distance will keep track of the distance of our current vertex
+  float current_distance = INFINITY;
+
+  //iterate through our vertex list to find the closest
   std::list<Vertex*>::iterator it;
-  for (it = RRTPath::vertexList.begin(); it != RRTPath::vertexList.end(); it++) {
-    currentDistance = RRTPath::getDistance((*it)->getLocation(), randomPoint);
-    if (currentDistance < closestDistance) {
+  for (it = RRTPath::vertex_list.begin(); it != RRTPath::vertex_list.end();
+      it++) {
+    //get the distance between our current vertex (it) and the random point
+    current_distance = RRTPath::get_distance((*it)->get_location(),
+                                             random_point);
+    //if the current distance is closer than what we have saved as closest
+    //save the current node and update the closest distance
+    if (current_distance < closest_distance) {
       closest = *it;
-      closestDistance = currentDistance;
+      closest_distance = current_distance;
     }
   }
 
   return closest;
 }
 
-float RRTPath::getDistance(std::pair<int, int> startPoint,
-                           std::pair<int, int> endPoint) {
-  int x1 = startPoint.first;
-  int x2 = endPoint.first;
-  int y1 = startPoint.second;
-  int y2 = endPoint.second;
+float RRTPath::get_distance(std::pair<int, int> start_point,
+                            std::pair<int, int> end_point) {
+  //x,y coords for our starting point
+  int x1 = start_point.first;
+  int y1 = start_point.second;
+
+  //x,y coords for our ending point
+  int x2 = end_point.first;
+  int y2 = end_point.second;
+
+  //euclidean distance formula
   float distance = sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
   return distance;
 }
 
-bool RRTPath::moveTowardsPoint(Vertex* closestVertex,
-                               std::pair<int, int> randomPoint) {
+bool RRTPath::move_towards_point(Vertex* closest_vertex,
+                                 std::pair<int, int> random_point) {
   //Move epsilon distance from our closest point towards our random point
-  std::pair<int, int> closestPoint = closestVertex->getLocation();
-  float theta = atan2(randomPoint.second-closestPoint.second,
-                      randomPoint.first-closestPoint.first);
-  float newX = closestPoint.first + RRTPath::epsilon * cos(theta);
-  float newY = closestPoint.second + RRTPath::epsilon * sin(theta);
+  std::pair<int, int> closest_point = closest_vertex->get_location();
+  float theta = atan2(random_point.second-closest_point.second,
+                      random_point.first-closest_point.first);
+  float newX = closest_point.first + RRTPath::epsilon * cos(theta);
+  float newY = closest_point.second + RRTPath::epsilon * sin(theta);
   //Cast from float to int, should automatically round down which is what we
   //want
-  std::pair<int, int> newPoint(static_cast<int>(newX), static_cast<int>(newY));
+  std::pair<int, int> new_point(static_cast<int>(newX), static_cast<int>(newY));
 
   //Check if the new path is safe
-  if (RRTPath::isSafe(closestPoint, newPoint)) {
-    Vertex *newVertex = new Vertex(newPoint.first, newPoint.second,
-                                   closestVertex);
-    RRTPath::vertexList.push_front(newVertex);
+  if (RRTPath::is_safe(closest_point, new_point)) {
+    Vertex *new_vertex = new Vertex(new_point.first, new_point.second,
+                                   closest_vertex);
+    RRTPath::vertex_list.push_front(new_vertex);
     return true;
   }
   return false;
 }
 
-bool RRTPath::reachedGoal(std::pair<int, int> newVertex) {
+bool RRTPath::reached_goal(std::pair<int, int> new_vertex) {
   //Check to see if our new vertex is within the designated radius of the goal
-  float distance = RRTPath::getDistance(newVertex, RRTPath::goalLocation);
-  if (distance <= RRTPath::goalRadius)
+  float distance = RRTPath::get_distance(new_vertex, RRTPath::goal_location);
+  if (distance <= RRTPath::goal_radius)
     return true;
   return false;
 }
 
-std::list<std::pair<int, int> > RRTPath::calculatePath(Vertex* goal) {
+std::list<std::pair<int, int> > RRTPath::calculate_path(Vertex* goal) {
   //Create an empty list for the path
   std::list<std::pair<int, int>> path;
 
@@ -153,46 +162,46 @@ std::list<std::pair<int, int> > RRTPath::calculatePath(Vertex* goal) {
   //So long as our current vertex's parent isn't the nullptr (indicating the
   //root node) add the location to the beginning of the list, then set the
   //current vertex to be the parent
-  while (current->getParent() != nullptr) {
-    path.push_front(current->getLocation());
-    current = current->getParent();
+  while (current->get_parent() != nullptr) {
+    path.push_front(current->get_location());
+    current = current->get_parent();
   }
 
   //Add the root node's location to the front of the list
-  path.push_front(root->getLocation());
+  path.push_front(root_node->get_location());
   return path;
 }
 
-bool RRTPath::isSafe(std::pair<int, int> startPoint,
-                     std::pair<int, int> endPoint) {
+bool RRTPath::is_safe(std::pair<int, int> start_point,
+                      std::pair<int, int> end_point) {
   //Check to make sure our endpoint is within bounds of the map
-  if (endPoint.first < 0 || endPoint.first > RRTPath::map.getSize().first ||
-      endPoint.second < 0 || endPoint.second > RRTPath::map.getSize().second)
+  if (end_point.first < 0 || end_point.first > RRTPath::map.get_size().first ||
+      end_point.second < 0 || end_point.second > RRTPath::map.get_size().second)
     return false;
 
   //Check to make sure endpoint isn't inside of an obstacle
-  std::list<Obstacle> obstacles = RRTPath::map.getObstacleList();
+  std::list<Obstacle> obstacles = RRTPath::map.get_obstacle_list();
   std::list<Obstacle>::iterator it;
   for (it = obstacles.begin(); it != obstacles.end(); it++) {
-    if (RRTPath::getDistance(endPoint, it->getLocation()) < it->getSize())
+    if (RRTPath::get_distance(end_point, it->get_location()) < it->get_size())
       return false;
   }
 
   //Check the path at intervals for a total distance of epsilon for collisions
-  float theta = atan2(endPoint.second - startPoint.second,
-                      endPoint.first - startPoint.first);
-  float currentX = startPoint.first;
-  float currentY = startPoint.second;
+  float theta = atan2(end_point.second - start_point.second,
+                      end_point.first - start_point.first);
+  float current_x = start_point.first;
+  float current_y = start_point.second;
   float step = static_cast<float>(epsilon)/10;
   //Move towards our next increment
   for (int i = 0; i < 10; i++) {
-    currentX += step*cos(theta);
-    currentY += step*sin(theta);
+    current_x += step*cos(theta);
+    current_y += step*sin(theta);
     //Check the next step for obstacles
     for (it = obstacles.begin(); it != obstacles.end(); it++) {
-      if (RRTPath::getDistance(std::pair<int, int>(static_cast<int>(currentX),
-                                                   static_cast<int>(currentY)),
-                               it->getLocation()) < it->getSize())
+      if (RRTPath::get_distance(std::pair<int, int>(static_cast<int>(current_x),
+                                                    static_cast<int>(current_y)),
+                                it->get_location()) < it->get_size())
         return false;
     }
   }
