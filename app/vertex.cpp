@@ -12,17 +12,17 @@
 #include <math.h>
 #include <vertex.h>
 
-Vertex::Vertex(int xStart, int yStart, Vertex* prevVertex) {
-  Vertex::x = xStart;
-  Vertex::y = yStart;
-  Vertex::parent = prevVertex;
+Vertex::Vertex(int x_start, int y_start, Vertex* parent_vertex) {
+  Vertex::x = x_start;
+  Vertex::y = y_start;
+  Vertex::parent = parent_vertex;
 }
 
-std::pair<int, int> Vertex::getLocation() {
+std::pair<int, int> Vertex::get_location() {
   std::pair<int, int> location(Vertex::x, Vertex::y);
   return location;
 }
 
-Vertex* Vertex::getParent() {
+Vertex* Vertex::get_parent() {
   return parent;
 }

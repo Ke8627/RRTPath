@@ -49,13 +49,13 @@ class Vertex {
    * @brief gets location of vertex
    * @return returns std::pair<x,y>
    */
-  std::pair<int,int> getLocation();
+  std::pair<int,int> get_location();
 
   /**
    * @brief gets the previous vertex
    * @return the parent vertex
    */
-  Vertex* getParent();
+  Vertex* get_parent();
 
   /**
    * @brief overload of == operator

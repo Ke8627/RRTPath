@@ -26,20 +26,20 @@ class RRTPath {
    * @return a pair indicating the starting location of the path as
    * std::pair<startXLocation:int, startYLocation:int>
    */
-  std::pair<int,int> startLocation;
+  std::pair<int,int> start_location;
 
   /**
    * @brief the location of the goal
    * @return a pair indicating the goal location of the path as
    * std::pair<goalXLocation:int, goalYLocation:int>
    */
-  std::pair<int,int> goalLocation;
+  std::pair<int,int> goal_location;
 
   /**
    * @brief The radius of the goal
    * @details How close to the goal is close enough to count
    */
-  int goalRadius;
+  int goal_radius;
 
   /**
    * @brief the distance moved each step during mapping
@@ -57,23 +57,23 @@ class RRTPath {
    * vertex has a value of zero, to let us know we've reached the beginning
    * when we are reconstructing the path
    */
-  Vertex *root;
+  Vertex *root_node;
 
   /**
    * @brief a list of x,y coordinates indicating the path from start to goal
    */
-  std::list<std::pair<int,int>> overallPath;
+  std::list<std::pair<int,int>> overall_path;
 
   /**
    * @brief a list of all the vertices in the map
    */
-  std::list<Vertex*> vertexList;
+  std::list<Vertex*> vertex_list;
 
   /**
    * @brief returns a random location on the map
    * @return a random location as a std::pair<xCoord:int, yCoord:int>
    */
-  std::pair<int,int> getRandomPoint();
+  std::pair<int,int> get_random_point();
 
   /**
    * @brief returns the closest Vertex to the given point
@@ -82,7 +82,7 @@ class RRTPath {
    * @param randomPoint the point you want to find the nearest vertex to
    * @return the nearest Vertex to the given point
    */
-  Vertex* getClosestPoint(std::pair<int,int>);
+  Vertex* get_closest_point(std::pair<int,int>);
 
   /**
    * @brief Expands the RRT between the Vertex and the given point
@@ -99,7 +99,7 @@ class RRTPath {
    * @return true if the expansion was made, false if a collision would have
    * occurred
    */
-  bool moveTowardsPoint(Vertex*, std::pair<int,int>);
+  bool move_towards_point(Vertex*, std::pair<int,int>);
 
   /**
    * @brief determines if we have reached the goal
@@ -108,7 +108,7 @@ class RRTPath {
    * @param the location of the newly created vertex
    * @return true if within goalRadius of goal, false otherwise
    */
-  bool reachedGoal(std::pair<int,int>);
+  bool reached_goal(std::pair<int,int>);
 
   /**
    * @brief the path between the start and goal
@@ -120,7 +120,7 @@ class RRTPath {
    * vertex, which will be designated by having a 0 instead of a Vertex in
    * the prevVertex.
    */
-  std::list<std::pair<int,int>> calculatePath(Vertex*);
+  std::list<std::pair<int,int>> calculate_path(Vertex*);
 
   /**
    * @brief returns the distance between two points
@@ -128,7 +128,7 @@ class RRTPath {
    * @param endPoint a pair<int,int> that indicates the second point
    * @return returns a float of the distance between the two given points
    */
-  float getDistance(std::pair<int,int>, std::pair<int,int>);
+  float get_distance(std::pair<int,int>, std::pair<int,int>);
 
   /**
    * @brief determines if a path between two points is safe
@@ -139,7 +139,7 @@ class RRTPath {
    * @param newPoint the location to end the path
    * @return true if path does not collide, false if a collision would occur
    */
-  bool isSafe(std::pair<int, int>, std::pair<int,int>);
+  bool is_safe(std::pair<int, int>, std::pair<int,int>);
 
  public:
   /**
@@ -162,15 +162,7 @@ class RRTPath {
    * their closest vertex and draw new, safe paths.
    * @return returns the path as a std::list<std::pair<x, y>>
    */
-  std::list<std::pair<int,int>> findPath();
-
-
-  /**
-   * @brief Draws a visual diagram of the RRT
-   * @detail a 2D drawing of the map and obstacles, the RRT, and the path
-   * taken from the start to the goal using matplotlibcpp.
-   */
-  void drawMap();
+  std::list<std::pair<int,int>> find_path();
 };
 
 #endif /* APP_RRTPATH_H_ */

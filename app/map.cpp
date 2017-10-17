@@ -20,26 +20,26 @@ Map::Map() {
   Map::size.second = 10;
 }
 
-Map::Map(int height, int width, std::list<Obstacle> obstacleList) {
+Map::Map(int height, int width, std::list<Obstacle> obstacle_list) {
   Map::size.first = height;
   Map::size.second = width;
-  Map::obstacleList = obstacleList;
+  Map::obstacle_list = obstacle_list;
 }
 
-void Map::addObstacle(Obstacle obs) {
-  obstacleList.push_back(obs);
-  obstacleList.sort();
-  obstacleList.unique();
+void Map::add_obstacle(Obstacle obs) {
+  obstacle_list.push_back(obs);
+  obstacle_list.sort();
+  obstacle_list.unique();
 }
 
-void Map::removeObstacle(Obstacle obs) {
-  obstacleList.remove(obs);
+void Map::remove_obstacle(Obstacle obs) {
+  obstacle_list.remove(obs);
 }
 
-std::pair<int, int> Map::getSize() {
+std::pair<int, int> Map::get_size() {
   return size;
 }
 
-std::list<Obstacle> Map::getObstacleList() {
-  return obstacleList;
+std::list<Obstacle> Map::get_obstacle_list() {
+  return obstacle_list;
 }

@@ -33,7 +33,7 @@ class Map {
   /**
    * @brief the list of obstacles within the map. Obstacles can overlap
    */
-  std::list<Obstacle> obstacleList;
+  std::list<Obstacle> obstacle_list;
 
 
  public:
@@ -59,7 +59,7 @@ class Map {
    * removed.
    * @param obs the Obstacle to be added
    */
-  void addObstacle(Obstacle);
+  void add_obstacle(Obstacle);
 
   /**
    * @brief Removes an obstacle from the map
@@ -67,7 +67,7 @@ class Map {
    * obstacle does not exist nothing happens.
    * @param obs the obstacle to be removed
    */
-  void removeObstacle(Obstacle);
+  void remove_obstacle(Obstacle);
 
   /**
    * @brief Gets the size of the map
@@ -75,13 +75,13 @@ class Map {
    * of the pair is the height, the second is the width
    * @return size of the map
    */
-  std::pair<int,int> getSize();
+  std::pair<int,int> get_size();
 
   /**
    * @brief returns the list of obstacles in the map
    * @return list of obstacles
    */
-  std::list<Obstacle> getObstacleList();
+  std::list<Obstacle> get_obstacle_list();
 };
 
 #endif /* APP_MAP_H_ */
