@@ -73,7 +73,7 @@ class RRTPath {
    * @brief returns a random location on the map
    * @return a random location as a std::pair<xCoord:int, yCoord:int>
    */
-  std::pair<int,int> get_random_point();
+  std::pair<int,int> GetRandomPoint();
 
   /**
    * @brief returns the closest Vertex to the given point
@@ -82,7 +82,7 @@ class RRTPath {
    * @param randomPoint the point you want to find the nearest vertex to
    * @return the nearest Vertex to the given point
    */
-  Vertex* get_closest_point(std::pair<int,int>);
+  Vertex* GetClosestPoint(std::pair<int,int>);
 
   /**
    * @brief Expands the RRT between the Vertex and the given point
@@ -99,7 +99,7 @@ class RRTPath {
    * @return true if the expansion was made, false if a collision would have
    * occurred
    */
-  bool move_towards_point(Vertex*, std::pair<int,int>);
+  bool MoveTowardsPoint(Vertex*, std::pair<int,int>);
 
   /**
    * @brief determines if we have reached the goal
@@ -108,7 +108,7 @@ class RRTPath {
    * @param the location of the newly created vertex
    * @return true if within goalRadius of goal, false otherwise
    */
-  bool reached_goal(std::pair<int,int>);
+  bool ReachedGoal(std::pair<int,int>);
 
   /**
    * @brief the path between the start and goal
@@ -120,7 +120,7 @@ class RRTPath {
    * vertex, which will be designated by having a 0 instead of a Vertex in
    * the prevVertex.
    */
-  std::list<std::pair<int,int>> calculate_path(Vertex*);
+  std::list<std::pair<int,int>> CalculatePath(Vertex*);
 
   /**
    * @brief returns the distance between two points
@@ -128,7 +128,7 @@ class RRTPath {
    * @param endPoint a pair<int,int> that indicates the second point
    * @return returns a float of the distance between the two given points
    */
-  float get_distance(std::pair<int,int>, std::pair<int,int>);
+  float GetDistance(std::pair<int,int>, std::pair<int,int>);
 
   /**
    * @brief determines if a path between two points is safe
@@ -139,7 +139,7 @@ class RRTPath {
    * @param newPoint the location to end the path
    * @return true if path does not collide, false if a collision would occur
    */
-  bool is_safe(std::pair<int, int>, std::pair<int,int>);
+  bool IsSafe(std::pair<int, int>, std::pair<int,int>);
 
  public:
   /**
@@ -162,7 +162,7 @@ class RRTPath {
    * their closest vertex and draw new, safe paths.
    * @return returns the path as a std::list<std::pair<x, y>>
    */
-  std::list<std::pair<int,int>> find_path();
+  std::list<std::pair<int,int>> FindPath();
 };
 
 #endif /* APP_RRTPATH_H_ */

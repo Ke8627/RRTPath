@@ -52,13 +52,13 @@ class Obstacle {
    * @brief gets the location of an Obstacle
    * @return a std::pair<xLocation:int, yLocation:int>
    */
-  std::pair<int,int> get_location();
+  std::pair<int,int> GetLocation();
 
   /**
    * @brief gets the size of an Obstacle
    * @return returns the radius of the obstacle
    */
-  int get_size();
+  int GetSize();
 
   /**
    * @brief overload of < operator

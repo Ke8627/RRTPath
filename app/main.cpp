@@ -52,14 +52,14 @@ int main()
   //Create obstacles (make as many as you like!)
   Obstacle obs(15, 15, 3);
   //Add our obstacle(s) to our map
-  specificMap.add_obstacle(obs);
+  specificMap.AddObstacle(obs);
   /***************************************************************************/
 
   //Create our path object
   RRTPath rrt(specificMap, start_x, start_y, goal_x, goal_y, step, radius);
 
   //Start it running and save the path
-  std::list<std::pair<int, int>> path = rrt.find_path();
+  std::list<std::pair<int, int>> path = rrt.FindPath();
 
   //Print the path for funsies so we can see where we went
   std::list<std::pair<int, int>>::iterator it;

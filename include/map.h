@@ -59,7 +59,7 @@ class Map {
    * removed.
    * @param obs the Obstacle to be added
    */
-  void add_obstacle(Obstacle);
+  void AddObstacle(Obstacle);
 
   /**
    * @brief Removes an obstacle from the map
@@ -67,7 +67,7 @@ class Map {
    * obstacle does not exist nothing happens.
    * @param obs the obstacle to be removed
    */
-  void remove_obstacle(Obstacle);
+  void RemoveObstacle(Obstacle);
 
   /**
    * @brief Gets the size of the map
@@ -75,13 +75,13 @@ class Map {
    * of the pair is the height, the second is the width
    * @return size of the map
    */
-  std::pair<int,int> get_size();
+  std::pair<int,int> GetSize();
 
   /**
    * @brief returns the list of obstacles in the map
    * @return list of obstacles
    */
-  std::list<Obstacle> get_obstacle_list();
+  std::list<Obstacle> GetObstacleList();
 };
 
 #endif /* APP_MAP_H_ */

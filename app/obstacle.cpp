@@ -21,10 +21,10 @@ Obstacle::Obstacle(int x_location, int y_location, int size) {
   Obstacle::obstacle_radius_ = size;
 }
 
-std::pair<int, int> Obstacle::get_location() {
+std::pair<int, int> Obstacle::GetLocation() {
   return Obstacle::location_;
 }
 
-int Obstacle::get_size() {
+int Obstacle::GetSize() {
   return Obstacle::obstacle_radius_;
 }
