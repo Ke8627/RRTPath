@@ -28,12 +28,12 @@ class Map {
    * @param height height of grid
    * @param width width of grid
    */
-  std::pair<int,int> size;
+  std::pair<int,int> size_;
 
   /**
    * @brief the list of obstacles within the map. Obstacles can overlap
    */
-  std::list<Obstacle> obstacle_list;
+  std::list<Obstacle> obstacle_list_;
 
 
  public:

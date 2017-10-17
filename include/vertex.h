@@ -21,17 +21,17 @@ class Vertex {
   /**
    * @brief the x coordinate of the vertex
    */
-  int x;
+  int x_;
 
   /**
    * @brief the y coordinate of the vertex
    */
-  int y;
+  int y_;
 
   /**
    * @brief the vertex that came before this one
    */
-  Vertex* parent;
+  Vertex* parent_;
 
 
 
@@ -61,18 +61,18 @@ class Vertex {
    * @brief overload of == operator
    */
   bool operator==(const Vertex& v) {
-    return (x == v.x &&
-        y == v.y &&
-        parent == v.parent);
+    return (x_ == v.x_ &&
+        y_ == v.y_ &&
+        parent_ == v.parent_);
   }
 
   /**
    * @brief overload of != operator
    */
   bool operator!=(const Vertex&v) {
-    return (x != v.x ||
-        y != v.y ||
-        parent != v.parent);
+    return (x_ != v.x_ ||
+        y_ != v.y_ ||
+        parent_ != v.parent_);
   }
 };
 

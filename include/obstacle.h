@@ -25,13 +25,13 @@ class Obstacle {
    * @details a std::pair<int,int> designating the location of the obstacle.
    * The first of the pair is the x location, the second is the y location
    */
-  std::pair<int,int> location;
+  std::pair<int,int> location_;
 
   /**
    * @brief the size of the obstacle
    * @details the radius of the square obstacle
    */
-  int size;
+  int obstacle_radius_;
 
 
  public:
@@ -64,32 +64,32 @@ class Obstacle {
    * @brief overload of < operator
    */
   inline bool operator < (const Obstacle& o) const {
-    return size < o.size;
+    return obstacle_radius_ < o.obstacle_radius_;
   }
 
   /**
    * @brief overload of > operator
    */
   inline bool operator > (const Obstacle& o) const {
-    return o.size < size;
+    return o.obstacle_radius_ < obstacle_radius_;
   }
 
   /**
    * @brief overload of == operator
    */
   inline bool operator == (const Obstacle& o) const {
-    return (location.first == o.location.first &&
-        location.second == o.location.second &&
-        size == o.size);
+    return (location_.first == o.location_.first &&
+        location_.second == o.location_.second &&
+        obstacle_radius_ == o.obstacle_radius_);
   }
 
   /**
    * @brief overload of != operator
    */
   inline bool operator != (const Obstacle& o) const {
-    return (location.first != o.location.first ||
-        location.second != o.location.second ||
-        size != o.size);
+    return (location_.first != o.location_.first ||
+        location_.second != o.location_.second ||
+        obstacle_radius_ != o.obstacle_radius_);
   }
 };
 

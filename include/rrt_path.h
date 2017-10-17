@@ -26,30 +26,30 @@ class RRTPath {
    * @return a pair indicating the starting location of the path as
    * std::pair<startXLocation:int, startYLocation:int>
    */
-  std::pair<int,int> start_location;
+  std::pair<int,int> start_location_;
 
   /**
    * @brief the location of the goal
    * @return a pair indicating the goal location of the path as
    * std::pair<goalXLocation:int, goalYLocation:int>
    */
-  std::pair<int,int> goal_location;
+  std::pair<int,int> goal_location_;
 
   /**
    * @brief The radius of the goal
    * @details How close to the goal is close enough to count
    */
-  int goal_radius;
+  int goal_radius_;
 
   /**
    * @brief the distance moved each step during mapping
    */
-  int epsilon;
+  int epsilon_;
 
   /**
    * @brief the Map object we are navigating
    */
-  Map map;
+  Map map_;
 
   /**
    * @brief The root vertex of our tree
@@ -57,17 +57,17 @@ class RRTPath {
    * vertex has a value of zero, to let us know we've reached the beginning
    * when we are reconstructing the path
    */
-  Vertex *root_node;
+  Vertex *root_node_;
 
   /**
    * @brief a list of x,y coordinates indicating the path from start to goal
    */
-  std::list<std::pair<int,int>> overall_path;
+  std::list<std::pair<int,int>> overall_path_;
 
   /**
    * @brief a list of all the vertices in the map
    */
-  std::list<Vertex*> vertex_list;
+  std::list<Vertex*> vertex_list_;
 
   /**
    * @brief returns a random location on the map

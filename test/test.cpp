@@ -131,14 +131,14 @@ TEST(path, constructor) {
   RRTPath rrt(specificMap, 0, 0, 15, 15, 5, 5);
 
   //Check the getters and setters
-  EXPECT_EQ(rrt.map.get_size().first, 15);
-  EXPECT_EQ(rrt.map.get_size().second, 20);
-  EXPECT_EQ(rrt.root_node->get_location().first, 0);
-  EXPECT_EQ(rrt.root_node->get_location().second, 0);
-  EXPECT_EQ(rrt.goal_location.first, 15);
-  EXPECT_EQ(rrt.goal_location.second, 15);
-  EXPECT_EQ(rrt.epsilon, 5);
-  EXPECT_EQ(rrt.goal_radius, 5);
+  EXPECT_EQ(rrt.map_.get_size().first, 15);
+  EXPECT_EQ(rrt.map_.get_size().second, 20);
+  EXPECT_EQ(rrt.root_node_->get_location().first, 0);
+  EXPECT_EQ(rrt.root_node_->get_location().second, 0);
+  EXPECT_EQ(rrt.goal_location_.first, 15);
+  EXPECT_EQ(rrt.goal_location_.second, 15);
+  EXPECT_EQ(rrt.epsilon_, 5);
+  EXPECT_EQ(rrt.goal_radius_, 5);
 }
 
 TEST(path, random_points) {
@@ -149,28 +149,28 @@ TEST(path, random_points) {
 
   //Check that point is within map bounds
   std::pair<int, int> randomPoint = rrt.get_random_point();
-  EXPECT_LE(randomPoint.first, specificMap.size.first);
+  EXPECT_LE(randomPoint.first, specificMap.get_size().first);
   EXPECT_GE(randomPoint.first, 0);
-  EXPECT_LE(randomPoint.second, specificMap.size.second);
+  EXPECT_LE(randomPoint.second, specificMap.get_size().second);
   EXPECT_GE(randomPoint.second, 0);
 
   //Check several times
   randomPoint = rrt.get_random_point();
-  EXPECT_LE(randomPoint.first, specificMap.size.first);
+  EXPECT_LE(randomPoint.first, specificMap.get_size().first);
   EXPECT_GE(randomPoint.first, 0);
-  EXPECT_LE(randomPoint.second, specificMap.size.second);
+  EXPECT_LE(randomPoint.second, specificMap.get_size().second);
   EXPECT_GE(randomPoint.second, 0);
 
   randomPoint = rrt.get_random_point();
-  EXPECT_LE(randomPoint.first, specificMap.size.first);
+  EXPECT_LE(randomPoint.first, specificMap.get_size().first);
   EXPECT_GE(randomPoint.first, 0);
-  EXPECT_LE(randomPoint.second, specificMap.size.second);
+  EXPECT_LE(randomPoint.second, specificMap.get_size().second);
   EXPECT_GE(randomPoint.second, 0);
 
   randomPoint = rrt.get_random_point();
-  EXPECT_LE(randomPoint.first, specificMap.size.first);
+  EXPECT_LE(randomPoint.first, specificMap.get_size().first);
   EXPECT_GE(randomPoint.first, 0);
-  EXPECT_LE(randomPoint.second, specificMap.size.second);
+  EXPECT_LE(randomPoint.second, specificMap.get_size().second);
   EXPECT_GE(randomPoint.second, 0);
 }
 
@@ -230,45 +230,45 @@ TEST(path, algorithm_test) {
   //testing moving towards the point, closest vertex should be the root
   //shouldn't be any obstacles in the way of moving from 0,0 to 3,3
   Vertex* closest = rrt.get_closest_point(std::pair<int, int>(10, 10));
-  EXPECT_EQ(closest->x, rrt.root_node->x);
-  EXPECT_EQ(closest->y, rrt.root_node->y);
-  EXPECT_TRUE(rrt.vertex_list.size()==1);
+  EXPECT_EQ(closest->x_, rrt.root_node_->x_);
+  EXPECT_EQ(closest->y_, rrt.root_node_->y_);
+  EXPECT_TRUE(rrt.vertex_list_.size()==1);
   EXPECT_TRUE(rrt.move_towards_point(closest, std::pair<int, int>(10, 10)));
-  EXPECT_TRUE(rrt.vertex_list.size()==2);
+  EXPECT_TRUE(rrt.vertex_list_.size()==2);
 
   //Check to make sure that the closest node is now at 3,3 rather than root
   //should be able to move from 3,3 to 6,6
   closest = rrt.get_closest_point(std::pair<int, int>(10, 10));
-  EXPECT_EQ(closest->x, 3);
-  EXPECT_EQ(closest->y, 3);
+  EXPECT_EQ(closest->x_, 3);
+  EXPECT_EQ(closest->y_, 3);
   EXPECT_TRUE(rrt.move_towards_point(closest, std::pair<int, int>(10, 10)));
-  EXPECT_TRUE(rrt.vertex_list.size()==3);
+  EXPECT_TRUE(rrt.vertex_list_.size()==3);
 
   //Check to make sure closest node is now at 6,6
   //should be able to get from 6,6 to 9,9
   closest = rrt.get_closest_point(std::pair<int, int>(15, 15));
-  EXPECT_EQ(closest->x, 6);
-  EXPECT_EQ(closest->y, 6);
+  EXPECT_EQ(closest->x_, 6);
+  EXPECT_EQ(closest->y_, 6);
   EXPECT_TRUE(rrt.move_towards_point(closest, std::pair<int,int>(15, 15)));
-  EXPECT_TRUE(rrt.vertex_list.size()==4);
+  EXPECT_TRUE(rrt.vertex_list_.size()==4);
 
   //Check to make sure closest node is now at 9,9
   //should be able to get from 9,9 to 12,12
   closest = rrt.get_closest_point(std::pair<int, int>(15, 15));
-  EXPECT_EQ(closest->x, 9);
-  EXPECT_EQ(closest->y, 9);
+  EXPECT_EQ(closest->x_, 9);
+  EXPECT_EQ(closest->y_, 9);
   EXPECT_TRUE(rrt.move_towards_point(closest, std::pair<int,int>(15, 15)));
-  EXPECT_TRUE(rrt.vertex_list.size()==5);
+  EXPECT_TRUE(rrt.vertex_list_.size()==5);
 
   //should not be able to move to 15,15 because of an obstacle
   //but should be within range of the goal
   closest = rrt.get_closest_point(std::pair<int, int>(15, 15));
   EXPECT_FALSE(rrt.move_towards_point(closest, std::pair<int, int>(15, 15)));
-  EXPECT_TRUE(rrt.vertex_list.size()==5);
+  EXPECT_TRUE(rrt.vertex_list_.size()==5);
   EXPECT_TRUE(rrt.reached_goal(closest->get_location()));
 
   //rebuild the path
-  path = rrt.calculate_path(rrt.vertex_list.front());
+  path = rrt.calculate_path(rrt.vertex_list_.front());
   //path should be of size 5: 0,0; 3,3; 6,6; 9,9; 12,12
   EXPECT_TRUE(path.size()==5);
   std::list<std::pair<int, int>>::iterator it;

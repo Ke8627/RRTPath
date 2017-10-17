@@ -16,30 +16,30 @@
 #include "map.h"
 
 Map::Map() {
-  Map::size.first = 10;
-  Map::size.second = 10;
+  Map::size_.first = 10;
+  Map::size_.second = 10;
 }
 
 Map::Map(int height, int width, std::list<Obstacle> obstacle_list) {
-  Map::size.first = height;
-  Map::size.second = width;
-  Map::obstacle_list = obstacle_list;
+  Map::size_.first = height;
+  Map::size_.second = width;
+  Map::obstacle_list_ = obstacle_list;
 }
 
 void Map::add_obstacle(Obstacle obs) {
-  obstacle_list.push_back(obs);
-  obstacle_list.sort();
-  obstacle_list.unique();
+  obstacle_list_.push_back(obs);
+  obstacle_list_.sort();
+  obstacle_list_.unique();
 }
 
 void Map::remove_obstacle(Obstacle obs) {
-  obstacle_list.remove(obs);
+  obstacle_list_.remove(obs);
 }
 
 std::pair<int, int> Map::get_size() {
-  return size;
+  return size_;
 }
 
 std::list<Obstacle> Map::get_obstacle_list() {
-  return obstacle_list;
+  return obstacle_list_;
 }

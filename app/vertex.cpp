@@ -13,16 +13,16 @@
 #include <vertex.h>
 
 Vertex::Vertex(int x_start, int y_start, Vertex* parent_vertex) {
-  Vertex::x = x_start;
-  Vertex::y = y_start;
-  Vertex::parent = parent_vertex;
+  Vertex::x_ = x_start;
+  Vertex::y_ = y_start;
+  Vertex::parent_ = parent_vertex;
 }
 
 std::pair<int, int> Vertex::get_location() {
-  std::pair<int, int> location(Vertex::x, Vertex::y);
+  std::pair<int, int> location(Vertex::x_, Vertex::y_);
   return location;
 }
 
 Vertex* Vertex::get_parent() {
-  return parent;
+  return parent_;
 }

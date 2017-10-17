@@ -16,15 +16,15 @@
 #include "obstacle.h"
 
 Obstacle::Obstacle(int x_location, int y_location, int size) {
-  Obstacle::location.first = x_location;
-  Obstacle::location.second = y_location;
-  Obstacle::size = size;
+  Obstacle::location_.first = x_location;
+  Obstacle::location_.second = y_location;
+  Obstacle::obstacle_radius_ = size;
 }
 
 std::pair<int, int> Obstacle::get_location() {
-  return Obstacle::location;
+  return Obstacle::location_;
 }
 
 int Obstacle::get_size() {
-  return Obstacle::size;
+  return Obstacle::obstacle_radius_;
 }
