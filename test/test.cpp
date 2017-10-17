@@ -212,6 +212,10 @@ TEST(path, safety_test) {
   p.first = 0;
   p.second = 1;
   EXPECT_TRUE(rrt.isSafe(v, p));
+
+  p.first = 100;
+  p.second = 100;
+  EXPECT_FALSE(rrt.isSafe(v,p));
 }
 
 TEST(path, algorithm_test) {
