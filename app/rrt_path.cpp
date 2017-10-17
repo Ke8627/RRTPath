@@ -16,6 +16,7 @@
 #include "rrt_path.h"
 #include <random>   //needed for random point generation
 #include <cmath>    //needed for finding closest point
+#include <iostream>
 
 RRTPath::RRTPath(Map map, int startXLocation, int startYLocation,
                  int goalXLocation, int goalYLocation, int epsilon,
@@ -111,18 +112,6 @@ float RRTPath::getDistance(std::pair<int, int> startPoint,
 
 bool RRTPath::moveTowardsPoint(Vertex* closestVertex,
                                std::pair<int, int> randomPoint) {
-  /**
-   * TODO
-   *    1. move epsilon distance from vertex towards random point
-   *    2. check if path between vertex and the new point is safe
-   *    3. if safe, create new vertex with previous vertex as prevVertex
-   *       and add to vertexList
-   *    4. check if new vertex is within goalRadius of goal
-   *       4a. if so, call calculatePath to rebuild the path back to the root
-   *           and then draw the map
-   *       4b. if not, generate a new random point and begin again
-   */
-
   //Move epsilon distance from our closest point towards our random point
   std::pair<int, int> closestPoint = closestVertex->getLocation();
   float theta = atan2(randomPoint.second-closestPoint.second,
@@ -192,16 +181,17 @@ bool RRTPath::isSafe(std::pair<int, int> startPoint,
                       endPoint.first - startPoint.first);
   float currentX = startPoint.first;
   float currentY = startPoint.second;
-  float distance = static_cast<float>(epsilon);
-  while (distance > 0) {
-    float nextX = currentX + cos(theta);
-    float nextY = currentY + sin(theta);
-    float distanceTraveled = sqrt((nextX-currentX)*(nextX-currentX)+(nextY-currentY)*(nextY-currentY));
-    distance -= distanceTraveled;
-    currentX = nextX;
-    currentY = nextY;
+  float step = static_cast<float>(epsilon)/10;
+  //Move towards our next increment
+  for (int i = 0; i < 10; i++) {
+    currentX += step*cos(theta);
+    currentY += step*sin(theta);
+    //Check the next step for obstacles
     for (it = obstacles.begin(); it != obstacles.end(); it++) {
-
+      if (RRTPath::getDistance(std::pair<int, int>(static_cast<int>(currentX),
+                                                   static_cast<int>(currentY)),
+                               it->getLocation()) < it->getSize())
+        return false;
     }
   }
 
