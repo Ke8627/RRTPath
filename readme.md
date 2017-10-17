@@ -20,6 +20,8 @@ Obstacles are simple squares defined by a location on the map and their size.
 
 Vertices are simple structs used by RRTPath to keep track of the RRT expansions and to rebuild the path from the start to the goal. They consist of an x,y coordinate location and a link to the vertex that preceded it.
 
+
+
 ## Standard install via command-line
 ```
 git clone --recursive https://github.com/jeshoward/RRTPath
@@ -29,6 +31,22 @@ cd build
 cmake ..
 make
 ```
+## Running the demo
+The demo can be found in main.cpp within the app source directory. To customize it you may set any of the variables in the customizable variables section at the top.
+  map_height: The height of your rectangular map
+  map_width: The width of your rectangular map
+  start_x: the x coordinate of where you want your path to begin
+  start_y: the y coordinate of where you want your path to begin
+  goal_x: the x coordinate of your goal location
+  goal_y: the y coordinate of your goal location
+  step: how far you travel at each algorithm iteration. Smaller steps
+       have more detail and may create a more efficient path, but take longer
+       to run.
+  radius: how near you need to be to the goal to "reach" it
+  
+Obstacles may be added to the map in the create obstacles here section. Simply create your obstacle(s) and then add them to the map as shown.
+  
+Your path is printed to the console at the conclusion of the demo.
 
 ## Building for code coverage
 ```
@@ -58,21 +76,6 @@ mkdir -p boilerplate-eclipse
 cd boilerplate-eclipse
 cmake -G "Eclipse CDT4 - Unix Makefiles" -D CMAKE_BUILD_TYPE=Debug -D CMAKE_ECLIPSE_VERSION=4.7.0 -D CMAKE_CXX_COMPILER_ARG1=-std=c++14 ../cpp-boilerplate/
 ```
-
-## Dependencies
-RRTPath includes the ability to generate a 2D visualization of the RRT and the final path taken by use of the matplotlib-cpp library, which can be found at:
-
-https://github.com/lava/matplotlib-cpp
-
-Installation terminal command is:
-
-sudo apt-get install python-matplotlib python-numpy python2.7-dev
-
-Matplotlib is a C++ wrapper for the python library matplotlib. In order to use the library you will need to have a working python installation. The matplotlib library is available under the MIT license.
-
-The matplotlib.h file can be placed anywhere to be included in your project.
-
-To add Python.h to your Eclipse environment go to Project -> Properties -> C/C++ Include Paths and Symbols and add an external include path to your python directory (/usr/include/python2.7 if you followed the instructions from the matplotlibcpp's readme). 
 
 ## Import
 
