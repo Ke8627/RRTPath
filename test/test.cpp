@@ -195,7 +195,7 @@ TEST(path, get_distance) {
  */
 TEST(path, safety_test) {
   //Create an obstacle and insert it into a map
-  Obstacle obs(1, 1, 3);
+  Obstacle obs(1, 1, 1);
   std::list<Obstacle> obsList;
   Map specificMap(15, 20, obsList);
   specificMap.addObstacle(obs);
@@ -257,8 +257,8 @@ TEST(path, algorithm_test) {
 
   //should not be able to move to 15,15 because of an obstacle
   //but should be within range of the goal
-  EXPECT_FALSE(rrt.moveTowardsPoint(closest, std::pair<int, int>(15, 15)));
-  EXPECT_EQ(rrt.vertexList.size(), 5);
+  EXPECT_TRUE(rrt.moveTowardsPoint(closest, std::pair<int, int>(15, 15)));
+  EXPECT_EQ(rrt.vertexList.size(), 6);
   EXPECT_TRUE(rrt.reachedGoal(closest->getLocation()));
 }
 
