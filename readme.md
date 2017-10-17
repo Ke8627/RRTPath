@@ -98,6 +98,50 @@ In Eclipse, right click on the shell-app in Project Explorer in the app folder a
 
 In Eclipse, right click on cpp-test in Project Explorer in the test folder and select Run As -> Local C/C++ Application
 
+# Running cppcheck
+
+To run cppcheck in Eclipse you can either right-click the app directory and select "cppcheck -> run cppcheck".
+To run cppcheck in the terminal "cppcheck -v --std=c++11 --enable=all -I include/ app/"
+
+# Running cpplint
+
+Formatter for Eclipse IDE
+
+The Google styleguide GitHub repository includes an xml file that can be imported into Eclipse. This is a limited usage of the style guide but it does help in being compliant with spacing for example:
+
+1. Download the XML file (https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-cpp-google-style.xml (Links to an external site.)). You can do this directly from command-line in your VM: wget https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-cpp-google-style.xml (Links to an external site.)
+
+2. Import styleguide in Eclipse
+        *With Eclipse open, Window -> Preferences -> C/C++ -> Code Style -> Formatter
+        *Click Import... navigate to the downloaded xml file, click OK
+        *Active profile should now say "Google C++"
+        *Click apply.
+        *If you want to automatically run the formatter every time you save a file: C/C++ -> Editor -> Save Actions -> Check Format source code and select one of the options (all lines or just edited)
+        *Click OK
+        *To manually apply formatting, select lines to change, then Source -> Format
+
+Code analysis with cpplint
+
+Lint tools are a form of static code analysis (like cppcheck). Google's cpplint tool is a python script that identifies potential source code issues that are in conflict with the Google C++ style guide. This tool can be run before a version control commit, after you've written a new class, or following refactoring. Any issue found by cpplint will have a confidence score, 1-5, with 5 most certain. Note: cpp-boilerplate has a few errors right now.
+
+To install and run from terminal:
+
+1. wget https://raw.githubusercontent.com/google/styleguide/gh-pages/cpplint/cpplint.py (Links to an external site.)
+2. Change permission to executable: chmod +x cpplint.py
+3. cd <repository>
+4. Run cpplint by typing 
+```
+./cpplint.py --extensions=h,hpp,cpp $( find . -name *.h -or -name *.hpp -or -name *.cpp | grep -vE -e "^./build/" -e "^./vendor/" -e "^./CMakeFiles/")
+```
+
+## Building doxygen documentation
+
+Download the included doxygenconfig file in the repository. Type
+```
+doxygen -g doxygenconfig
+doxygen doxygenconfig
+```
+
 ## Contributing
 This implementation was an exercise in software engineering practices for the University of Maryland course ENPM808X - Software Development for Robotics. No contributions are particularly desired, though feel free to spiffy up the code for your own use.
 
