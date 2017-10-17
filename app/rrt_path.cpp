@@ -199,12 +199,3 @@ bool RRTPath::isSafe(std::pair<int, int> startPoint,
 
   return true;
 }
-
-void RRTPath::drawMap() {
-  /**
-   * TODO
-   *    use matplotlib to draw a 2D graph of the map and obstacles, the RRT,
-   *    and the path taken from start to goal
-   */
-
-}
