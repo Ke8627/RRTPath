@@ -1,0 +1,104 @@
+\href{https://travis-ci.org/jeshoward/RRTPath}{\tt } \subsection*{\href{https://coveralls.io/github/jeshoward/RRTPath?branch=master}{\tt } }
+
+\subsection*{Rapidly Exploring Random Tree Pathing Algorithm}
+
+A simple rapidly exploring random tree path algorithm implementation. Includes four classes\+: -\/\+R\+R\+T\+Path -\/\+Vertex -\/\+Map -\/\+Obstacle
+
+The R\+R\+T\+Path class relies upon the map, vertex, and obstacle classes to function. It accepts a map, with or without obstacles, a starting location on the map, a goal location on the map, a distance that the R\+RT expands at each step, a distance that the R\+RT uses to check for collisions, and a radius for the goal. It returns the first path it finds (not always the most efficient) between the starting location and the goal as a list of x,y coordinate pairs.
+
+Vertices are simple structures used by R\+R\+T\+Path to keep track of the R\+RT expansions and to rebuild the path from the start to the goal. They consist of an x,y coordinate location and a link to the vertex that preceded it.
+
+The map class is a simple grid. The default size of the map is 10x10, but can be customized to any rectangular height and width. Maps can have obstacles or not.
+
+Obstacles are defined by a location on the map and their radius.
+
+Vertices are simple structs used by R\+R\+T\+Path to keep track of the R\+RT expansions and to rebuild the path from the start to the goal. They consist of an x,y coordinate location and a link to the vertex that preceded it.
+
+\#\# Standard install via command-\/line 
+\begin{DoxyCode}
+1 git clone --recursive https://github.com/jeshoward/RRTPath
+2 cd <path to repository>
+3 mkdir build
+4 cd build
+5 cmake ..
+6 make
+\end{DoxyCode}
+
+
+\#\# Building for code coverage 
+\begin{DoxyCode}
+1 sudo apt-get install lcov
+2 cmake -D COVERAGE=ON -D CMAKE\_BUILD\_TYPE=Debug ../
+3 make
+4 make code\_coverage
+\end{DoxyCode}
+ This generates a index.\+html page in the build/coverage sub-\/directory that can be viewed locally in a web browser.
+
+\subsection*{Working with Eclipse I\+DE}
+
+\subsection*{Installation}
+
+In your Eclipse workspace directory (or create a new one), checkout the repo (and submodules) 
+\begin{DoxyCode}
+1 mkdir -p ~/workspace
+2 cd ~/workspace
+3 git clone --recursive https://github.com/jeshoward/RRTPath
+\end{DoxyCode}
+
+
+In your work directory, use cmake to create an Eclipse project for an \mbox{[}out-\/of-\/source build\mbox{]} of cpp-\/boilerplate
+
+
+\begin{DoxyCode}
+1 cd ~/workspace
+2 mkdir -p boilerplate-eclipse
+3 cd boilerplate-eclipse
+4 cmake -G "Eclipse CDT4 - Unix Makefiles" -D CMAKE\_BUILD\_TYPE=Debug -D CMAKE\_ECLIPSE\_VERSION=4.7.0 -D
+       CMAKE\_CXX\_COMPILER\_ARG1=-std=c++14 ../cpp-boilerplate/
+\end{DoxyCode}
+
+
+\subsection*{Import}
+
+Open Eclipse, go to File -\/$>$ Import -\/$>$ General -\/$>$ Existing Projects into Workspace -\/$>$ Select \char`\"{}boilerplate-\/eclipse\char`\"{} directory created previously as root directory -\/$>$ Finish
+
+\section*{Edit}
+
+Source files may be edited under the \char`\"{}\mbox{[}\+Source Directory\mbox{]}\char`\"{} label in the Project Explorer.
+
+\subsection*{Build}
+
+To build the project, in Eclipse, unfold R\+R\+T\+Path project in Project Explorer, unfold Build Targets, double click on \char`\"{}all\char`\"{} to build all projects.
+
+\subsection*{Running the demo}
+
+The demo can be found in main.\+cpp within the app source directory. To customize it you may set any of the variables in the customizable variables section at the top. map\+\_\+height\+: The height of your rectangular map map\+\_\+width\+: The width of your rectangular map start\+\_\+x\+: the x coordinate of where you want your path to begin start\+\_\+y\+: the y coordinate of where you want your path to begin goal\+\_\+x\+: the x coordinate of your goal location goal\+\_\+y\+: the y coordinate of your goal location step\+: how far you travel at each algorithm iteration. Smaller steps have more detail and may create a more efficient path, but take longer to run. radius\+: how near you need to be to the goal to \char`\"{}reach\char`\"{} it
+
+Obstacles may be added to the map in the create obstacles here section. Simply create your obstacle(s) and then add them to the map as shown.
+
+Your path is printed to the console at the conclusion of the demo.
+
+In Eclipse, right click on the shell-\/app in Project Explorer in the app folder and select Run As -\/$>$ Local C/\+C++ Application
+
+\subsection*{Running the tests}
+
+In Eclipse, right click on cpp-\/test in Project Explorer in the test folder and select Run As -\/$>$ Local C/\+C++ Application
+
+\subsection*{Contributing}
+
+This implementation was an exercise in software engineering practices for the University of Maryland course E\+N\+P\+M808X -\/ Software Development for Robotics. No contributions are particularly desired, though feel free to spiffy up the code for your own use.
+
+
+\begin{DoxyItemize}
+\item Google C++ Sytle
+
+To include and use Google C++ Style formatter in Eclipse
+\begin{DoxyEnumerate}
+\item In Eclipse, go to Window -\/$>$ Preferences -\/$>$ C/\+C++ -\/$>$ Code Style -\/$>$ Formatter. Import \href{https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-cpp-google-style.xml}{\tt eclipse-\/cpp-\/google-\/style} and apply.
+\item To use Google C++ style formatter, right click on the source code or folder in Project Explorer and choose Source -\/$>$ Format
+\end{DoxyEnumerate}
+\end{DoxyItemize}
+
+\subsection*{Licensing}
+
+The code in this project is licensed under G\+NU public license 
