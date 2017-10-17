@@ -13,8 +13,8 @@
  * the nearest edge of the obstacle.
  */
 
-#ifndef APP_OBSTACLE_H_
-#define APP_OBSTACLE_H_
+#ifndef INCLUDE_OBSTACLE_H_
+#define INCLUDE_OBSTACLE_H_
 
 #include <utility>
 
@@ -25,7 +25,7 @@ class Obstacle {
    * @details a std::pair<int,int> designating the location of the obstacle.
    * The first of the pair is the x location, the second is the y location
    */
-  std::pair<int,int> location_;
+  std::pair<int, int> location_;
 
   /**
    * @brief the size of the obstacle
@@ -52,7 +52,7 @@ class Obstacle {
    * @brief gets the location of an Obstacle
    * @return a std::pair<xLocation:int, yLocation:int>
    */
-  std::pair<int,int> GetLocation();
+  std::pair<int, int> GetLocation();
 
   /**
    * @brief gets the size of an Obstacle
@@ -93,4 +93,4 @@ class Obstacle {
   }
 };
 
-#endif /* APP_OBSTACLE_H_ */
+#endif /* INCLUDE_OBSTACLE_H_ */

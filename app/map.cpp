@@ -13,8 +13,9 @@
  * It has a dependent class, Obstacle.
  */
 
-#include "map.h"
-
+#include "../include/map.h"
+#include <utility>
+#include <list>
 Map::Map() {
   Map::size_.first = 10;
   Map::size_.second = 10;

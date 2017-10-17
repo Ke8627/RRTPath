@@ -10,8 +10,8 @@
  * on the RRTPath's map and the vertex that came before it.
  */
 
-#ifndef APP_VERTEX_H_
-#define APP_VERTEX_H_
+#ifndef INCLUDE_VERTEX_H_
+#define INCLUDE_VERTEX_H_
 
 #include <utility>
 #include <list>
@@ -49,7 +49,7 @@ class Vertex {
    * @brief gets location of vertex
    * @return returns std::pair<x,y>
    */
-  std::pair<int,int> get_location();
+  std::pair<int, int> get_location();
 
   /**
    * @brief gets the previous vertex
@@ -76,4 +76,4 @@ class Vertex {
   }
 };
 
-#endif /* APP_VERTEX_H_ */
+#endif /* INCLUDE_VERTEX_H_ */

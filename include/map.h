@@ -14,12 +14,13 @@
  * It has a dependent class, Obstacle.
  */
 
-#ifndef APP_MAP_H_
-#define APP_MAP_H_
+#ifndef INCLUDE_MAP_H_
+#define INCLUDE_MAP_H_
 
-#include "obstacle.h"
-#include "vertex.h"
 #include <list>
+#include <utility>
+#include "./include/obstacle.h"
+#include "./include/vertex.h"
 
 class Map {
  private:
@@ -28,7 +29,7 @@ class Map {
    * @param height height of grid
    * @param width width of grid
    */
-  std::pair<int,int> size_;
+  std::pair<int, int> size_;
 
   /**
    * @brief the list of obstacles within the map. Obstacles can overlap
@@ -75,7 +76,7 @@ class Map {
    * of the pair is the height, the second is the width
    * @return size of the map
    */
-  std::pair<int,int> GetSize();
+  std::pair<int, int> GetSize();
 
   /**
    * @brief returns the list of obstacles in the map
@@ -84,4 +85,4 @@ class Map {
   std::list<Obstacle> GetObstacleList();
 };
 
-#endif /* APP_MAP_H_ */
+#endif /* INCLUDE_MAP_H_ */

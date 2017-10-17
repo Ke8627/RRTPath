@@ -11,6 +11,7 @@
  */
 #include <math.h>
 #include <vertex.h>
+#include <utility>
 
 Vertex::Vertex(int x_start, int y_start, Vertex* parent_vertex) {
   Vertex::x_ = x_start;

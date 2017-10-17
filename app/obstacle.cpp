@@ -13,7 +13,8 @@
  * the nearest edge of the obstacle.
  */
 
-#include "obstacle.h"
+#include "../include/obstacle.h"
+#include <utility>
 
 Obstacle::Obstacle(int x_location, int y_location, int size) {
   Obstacle::location_.first = x_location;
